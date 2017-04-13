@@ -1,0 +1,97 @@
+
+
+
+<html>
+   
+  <head>
+       <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"> </script>
+  </head>
+  <body> 
+      <!--<button onclick="test()"> click </button>-->
+      <button onclick="show()"> 预览 </button>
+      <button onclick="upload()"> 上传 </button>
+     <input type="file" id="input" >
+     <div id ="preview" ></div>
+  </body>
+
+<script> 
+var file ;
+// function test() { 
+//   var selected_file = document.getElementById('input').files[0];
+//   console.log('name:', selected_file.name);
+//   console.log('size:',selected_file.size);
+//   console.log('type:',selected_file.type);
+//   file = selected_file;
+// }
+
+// 点击预览按钮，进行图片预览
+function show() {
+   var imageType = /^image\//;
+   let files  = $('#input').get(0).files;
+   if(!files || files.length == 0) {
+       alert("未选中图片");
+       return
+   }
+   file = files[0];
+   //判断文件是否是图片类型
+   if(!imageType.test(file.type)) {
+     alert("文件不是图片");
+     return;
+   }
+
+   // 创建图片标签，插入  div#preview 中
+   var img = document.createElement("img");
+   img.classList.add("obj");
+   img.file = file;
+   var preview = document.getElementById('preview');
+   preview.appendChild(img);
+   
+   //使用FileReader对象读取选中图片。
+   var reader = new FileReader();
+   reader.onload = (function(aImg,aFile) {
+     return function(e) {
+       aImg.src = e.target.result;
+     }
+   })(img,file);
+   reader.readAsDataURL(file);
+
+}
+
+// 点击上传按钮进行单张图片上传
+function upload() {
+   var imageType = /^image\//;
+   let files  = $('#input').get(0).files;
+   if(!files || files.length == 0) {
+       alert("未选中图片");
+       return
+   }
+   file = files[0];
+   //判断文件是否是图片类型
+   if(!imageType.test(file.type)) {
+     alert("文件不是图片");
+     return;
+   }
+
+   var reader = new FileReader();
+   reader.onload = ((function(file) {
+       return function(e) {
+           let img_data = e.target.result;
+           let img_name = file.name;
+           $.ajax({
+               data:JSON.stringify({imgData:img_data,imgName:img_name}),
+               type:"POST",
+               url:'/upload'
+            }).success(function(msg) {
+                alert("upload success,"+ msg)
+            })
+       }
+   })(file));
+
+   reader.readAsDataURL(file);
+
+
+}
+
+</script>
+
+</html>
