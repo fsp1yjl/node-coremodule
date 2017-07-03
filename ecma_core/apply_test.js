@@ -5,16 +5,11 @@ var obj_a = {
 		console.log('param a:',a,'param b:',b);
 	}
 };
-
 obj_a.show(22,33);
-
-
-console.log('apply here:');
-
+console.log('apply start:');
 var obj_b = {
 	name:'obj_b'
 };
-
-
 obj_a.show.apply(obj_b,['aaa','dddd']);
+name = 'ddddd';
 

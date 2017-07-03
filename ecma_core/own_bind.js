@@ -1,18 +1,13 @@
-//apply函数的模拟实现
+//bind函数的模拟实现
 Function.prototype.own_bind = function() {
-	console.log(arguments);
-	//let fn = this;
 	let context = arguments[0];
 	let params = arguments[1];
 	var temp_func = Symbol();
 	context[temp_func]= this;
 	return function() {
-		let args = Array.prototype.slice.call(arguments);
+		let args = Array.prototype.slice.apply(arguments);
 		return eval('context[temp_func](' + args.join(',') + ')');
-	}
-//	eval('context[temp_func](' + params.join(',') + ')');
-//	delete context.dddd
-	
+	}	
 };
 var obj_a = {
 	name:'obj_a',
@@ -25,5 +20,5 @@ var obj_a = {
 var obj_b = {
 	name: "obj_b"
 }
-
+// own_bind 测试
 obj_a.show.own_bind(obj_b)('2','3')
