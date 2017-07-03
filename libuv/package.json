@@ -1,0 +1,11 @@
+{
+  "name": "libuv_addon",
+  "version": "1.0.0",
+  "description": "my reuseable c++ addon",
+  "main": "./build/Release/my_addon",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
