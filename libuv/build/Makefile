@@ -324,6 +324,11 @@ ifeq ($(strip $(foreach prefix,$(NO_LOAD),\
                  $(join ^,my_addon.target.mk)))),)
   include my_addon.target.mk
 endif
+ifeq ($(strip $(foreach prefix,$(NO_LOAD),\
+    $(findstring $(join ^,$(prefix)),\
+                 $(join ^,my_async.target.mk)))),)
+  include my_async.target.mk
+endif
 
 quiet_cmd_regen_makefile = ACTION Regenerating $@
 cmd_regen_makefile = cd $(srcdir); /usr/local/lib/node_modules/node-gyp/gyp/gyp_main.py -fmake --ignore-environment "--toplevel-dir=." -I/Users/eric/work/test/node-coremodule/libuv/build/config.gypi -I/usr/local/lib/node_modules/node-gyp/addon.gypi -I/Users/eric/.node-gyp/6.8.0/include/node/common.gypi "--depth=." "-Goutput_dir=." "--generator-output=build" "-Dlibrary=shared_library" "-Dvisibility=default" "-Dnode_root_dir=/Users/eric/.node-gyp/6.8.0" "-Dnode_gyp_dir=/usr/local/lib/node_modules/node-gyp" "-Dnode_lib_file=node.lib" "-Dmodule_root_dir=/Users/eric/work/test/node-coremodule/libuv" "-Dnode_engine=v8" binding.gyp
